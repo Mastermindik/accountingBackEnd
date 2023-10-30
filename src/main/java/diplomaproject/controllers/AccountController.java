@@ -5,7 +5,6 @@ import diplomaproject.DTO.user.*;
 import diplomaproject.exeptions.AppError;
 import diplomaproject.services.accountPictureService.AccountPictureService;
 import diplomaproject.services.accountService.AccountServiceImpl;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("user")
@@ -31,8 +28,8 @@ public class AccountController {
     private final AccountPictureService accountPictureService;
 
     @GetMapping("test")
-    private List<AccountDTO> test() {
-        return accountService.getAllAccounts();
+    private String test() {
+        return "Success";
     }
 
     @GetMapping("/current")
@@ -41,7 +38,7 @@ public class AccountController {
     }
 
     @PostMapping("login")
-    private ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest, HttpServletResponse response) {
+    private ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) {
         try {
             String token = accountService.loginAccount(jwtRequest);
             return ResponseEntity.ok(new JwtResponse(token));
@@ -51,7 +48,7 @@ public class AccountController {
     }
 
     @PostMapping("register")
-    private ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO, HttpServletResponse response) {
+    private ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
         try {
             String token = accountService.registerAccount(registerDTO);
             return ResponseEntity.ok(new JwtResponse(token));

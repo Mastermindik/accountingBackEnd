@@ -50,6 +50,6 @@ public class AuthHandler implements AuthenticationSuccessHandler {
         cookie.setPath("/");
         cookie.setMaxAge(30 * 24 * 60 * 60);
         response.addCookie(cookie);
-        response.sendRedirect("http://localhost:3000/dashboard");
+        response.sendRedirect("https://accounting-sand.vercel.app/dashboard");
     }
 }
