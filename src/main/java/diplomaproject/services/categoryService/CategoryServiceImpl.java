@@ -3,14 +3,10 @@ package diplomaproject.services.categoryService;
 import diplomaproject.DTO.category.AddCategoryDTO;
 import diplomaproject.DTO.category.CategoriesDTO;
 import diplomaproject.DTO.category.CustomCategoryDTO;
-import diplomaproject.DTO.category.DeleteCategoryDTO;
-import diplomaproject.models.Account;
-import diplomaproject.models.DefaultCategory;
-import diplomaproject.models.CustomCategory;
-import diplomaproject.models.MainCategory;
+import diplomaproject.models.*;
 import diplomaproject.repositories.AccountRepository;
-import diplomaproject.repositories.DefaultCategoryRepository;
 import diplomaproject.repositories.CustomCategoryRepository;
+import diplomaproject.repositories.DefaultCategoryRepository;
 import diplomaproject.utils.JwtToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,10 +56,8 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     @Transactional
-    public boolean deleteCategoryById(long id) {
-//        customCategoryRepository.findById(id);
+    public void deleteCategoryById(long id) {
         customCategoryRepository.deleteById(id);
-        return true;
     }
 
     @Override
@@ -73,6 +66,27 @@ public class CategoryServiceImpl implements CategoryService{
         String email = jwtToken.getEmail(token);
         List<CustomCategory> categories = customCategoryRepository.findCustomCategoriesByAccount_Email(email);
         return categories.stream().map(c -> c.toCustomCategoryDTO()).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void setUpDefaultCategories() {
+        if (defaultCategoryRepository.findAll().size() == 0) {
+            defaultCategoryRepository.save(new DefaultCategory("Food", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Transport", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Rent", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Education", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Vacation", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Bills and payments", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Entertainment", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Clothes and shoes", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Others", TransactionType.EXPENSE));
+            defaultCategoryRepository.save(new DefaultCategory("Salary", TransactionType.INCOME));
+            defaultCategoryRepository.save(new DefaultCategory("Dividends", TransactionType.INCOME));
+            defaultCategoryRepository.save(new DefaultCategory("Percentages", TransactionType.INCOME));
+            defaultCategoryRepository.save(new DefaultCategory("Business income", TransactionType.INCOME));
+            defaultCategoryRepository.save(new DefaultCategory("Others", TransactionType.INCOME));
+        }
     }
 
     private void divideCategories(List<? extends MainCategory> categories, CategoriesDTO categoriesDTO) {

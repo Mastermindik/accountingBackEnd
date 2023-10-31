@@ -1,19 +1,17 @@
 package diplomaproject.config;
 
-import diplomaproject.exeptions.AppError;
 import diplomaproject.models.Account;
-import diplomaproject.models.DefaultCategory;
 import diplomaproject.models.CustomRoles;
-import diplomaproject.models.TransactionType;
 import diplomaproject.repositories.DefaultCategoryRepository;
 import diplomaproject.services.accountService.AccountDetailsService;
 import diplomaproject.services.accountService.AccountServiceImpl;
+import diplomaproject.services.categoryService.CategoryService;
+import diplomaproject.services.categoryService.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -23,7 +21,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -31,7 +28,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -91,28 +87,14 @@ public class SecurityConfig {
 
     @Bean
     public CommandLineRunner addAdmin(final AccountServiceImpl accountService,
-                                      final DefaultCategoryRepository defaultCategoryRepository) {
+                                      final CategoryServiceImpl categoryService) {
         return new CommandLineRunner() {
             @Override
-            public void run(String... args) throws Exception {
+            public void run(String... args) {
                 Account admin = new Account("Admin", "admin@admin.com", "adminadmin");
                 admin.setRoles(CustomRoles.ADMIN);
                 accountService.registerAdmin(admin);
-                defaultCategoryRepository.save(new DefaultCategory("Food", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Transport", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Rent", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Education", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Vacation", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Bills and payments", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Entertainment", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Clothes and shoes", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Others", TransactionType.EXPENSE));
-                defaultCategoryRepository.save(new DefaultCategory("Salary", TransactionType.INCOME));
-                defaultCategoryRepository.save(new DefaultCategory("Dividends", TransactionType.INCOME));
-                defaultCategoryRepository.save(new DefaultCategory("Percentages", TransactionType.INCOME));
-                defaultCategoryRepository.save(new DefaultCategory("Business income", TransactionType.INCOME));
-                defaultCategoryRepository.save(new DefaultCategory("Others", TransactionType.INCOME));
-                System.out.println(defaultCategoryRepository.findAll());
+                categoryService.setUpDefaultCategories();
             }
         };
     }

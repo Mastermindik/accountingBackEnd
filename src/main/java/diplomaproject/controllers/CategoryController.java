@@ -47,7 +47,11 @@ public class CategoryController {
 
     @DeleteMapping("/delete/{id}")
     private ResponseEntity<?> delete(@PathVariable(name = "id") long id) {
-        categoryService.deleteCategoryById(id);
-        return new ResponseEntity<>(new AppSuccess("Category deleted"), HttpStatus.OK);
+        try {
+            categoryService.deleteCategoryById(id);
+            return new ResponseEntity<>(new AppSuccess("Category deleted"), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "Something was wrong"), HttpStatus.BAD_REQUEST);
+        }
     }
 }
