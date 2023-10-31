@@ -114,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
         String email = jwtToken.getEmail(token);
         Account account = accountRepository.findAccountByEmail(email);
         long pictId = accountPictureService.saveAccountPicture(file);
-        account.setPictureUrl("https://accounting-sand.vercel.app/user/image/" + pictId);
+        account.setPictureUrl("https://accountingback.onrender.com/user/image/" + pictId);
         accountRepository.save(account);
     }
 }
