@@ -2,10 +2,8 @@ package diplomaproject.config;
 
 import diplomaproject.models.Account;
 import diplomaproject.models.CustomRoles;
-import diplomaproject.repositories.DefaultCategoryRepository;
 import diplomaproject.services.accountService.AccountDetailsService;
 import diplomaproject.services.accountService.AccountServiceImpl;
-import diplomaproject.services.categoryService.CategoryService;
 import diplomaproject.services.categoryService.CategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -75,8 +73,6 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .oauth2Login(o -> o.successHandler(authHandler))
-//                .oauth2ResourceServer(oauth2 -> oauth2.jwt()
-//                .oauth2Login(oauth -> oauth.successHandler(authenticationSuccessHandler))
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 )

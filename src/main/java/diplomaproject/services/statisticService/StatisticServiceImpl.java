@@ -2,7 +2,6 @@ package diplomaproject.services.statisticService;
 
 import diplomaproject.DTO.transaction.TransactionStatisticDTO;
 import diplomaproject.models.MyTransaction;
-import diplomaproject.repositories.AccountRepository;
 import diplomaproject.repositories.TransactionRepository;
 import diplomaproject.utils.JwtToken;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class StatisticServiceImpl implements StatisticService {
     private final TransactionRepository transactionRepository;
-    private final AccountRepository accountRepository;
     private final JwtToken jwtToken;
 
     @Override
@@ -140,9 +138,6 @@ public class StatisticServiceImpl implements StatisticService {
                     dates.add(calendar.getTime());
                     calendar.add(Calendar.MONTH, i);
                 }
-//                calendar.set(Calendar.DAY_OF_YEAR, 1);
-//                dates.add(calendar.getTime());
-//                dates.add(now);
             }
         }
 

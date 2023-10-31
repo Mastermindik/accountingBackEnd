@@ -4,7 +4,6 @@ import diplomaproject.DTO.AppSuccess;
 import diplomaproject.DTO.category.AddCategoryDTO;
 import diplomaproject.DTO.category.CategoriesDTO;
 import diplomaproject.DTO.category.CustomCategoryDTO;
-import diplomaproject.DTO.category.DeleteCategoryDTO;
 import diplomaproject.exeptions.AppError;
 import diplomaproject.services.categoryService.CategoryService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/categories")

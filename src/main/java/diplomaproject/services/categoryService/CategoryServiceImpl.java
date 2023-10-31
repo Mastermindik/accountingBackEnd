@@ -50,7 +50,6 @@ public class CategoryServiceImpl implements CategoryService{
         }
         account.getCustomCategories().add(customCategory);
         customCategory.setAccount(account);
-//        account.addCustomCategory(customCategory);
         accountRepository.save(account);
     }
 

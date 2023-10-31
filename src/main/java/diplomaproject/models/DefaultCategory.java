@@ -1,7 +1,6 @@
 package diplomaproject.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,6 @@ public class DefaultCategory extends MainCategory {
     @GeneratedValue
     private Long id;
 
-    //    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)

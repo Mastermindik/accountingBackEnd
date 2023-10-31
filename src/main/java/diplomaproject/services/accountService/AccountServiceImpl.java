@@ -5,9 +5,7 @@ import diplomaproject.DTO.user.JwtRequest;
 import diplomaproject.DTO.user.RegisterDTO;
 import diplomaproject.DTO.user.UpdateAccountDTO;
 import diplomaproject.models.Account;
-import diplomaproject.models.AccountPicture;
 import diplomaproject.models.Budget;
-import diplomaproject.repositories.AccountPictureRepository;
 import diplomaproject.repositories.AccountRepository;
 import diplomaproject.services.accountPictureService.AccountPictureService;
 import diplomaproject.utils.JwtToken;
@@ -116,7 +114,7 @@ public class AccountServiceImpl implements AccountService {
         String email = jwtToken.getEmail(token);
         Account account = accountRepository.findAccountByEmail(email);
         long pictId = accountPictureService.saveAccountPicture(file);
-        account.setPictureUrl("http://localhost:8080/user/image/" + pictId);
+        account.setPictureUrl("https://accounting-sand.vercel.app/user/image/" + pictId);
         accountRepository.save(account);
     }
 }
